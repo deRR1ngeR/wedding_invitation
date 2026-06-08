@@ -872,7 +872,9 @@ figure {
   box-shadow: none;
 }
 
-.dresscode-carousel-viewport:has(.dresscode-slide:not(.dresscode-slide--palette).is-active) {
+.dresscode-carousel-viewport:has(
+  .dresscode-slide:not(.dresscode-slide--palette).is-active
+) {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
@@ -2564,7 +2566,7 @@ h2.lobster-heading {
 
 .form-wrapper {
   width: 100%;
-  height: 1400px; /* регулируй */
+  height: 2100px; /* регулируй */
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0;
