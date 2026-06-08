@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -493,11 +493,13 @@
                   <img src="images/heart.png" alt="" class="feature-icon-img" />
                 </span>
                 <div class="feature-copy">
-                  <h3>ХОРОШЕЕ НАСТРОЕНИЕ</h3>
+                  <h3>АЛКОГОЛЬ ВМЕСТО ЦВЕТОВ</h3>
                   <p>
-                    Для нас самое важное — чтобы вы пришли с улыбкой. Мы очень
-                    хотим, чтобы этот день запомнился всем как тёплый и
-                    радостный.
+                    Мы очень любим цветы, но формат нашего мероприятия не
+                    позволит сохранить их до конца нашего вечера. Мы будем рады,
+                    если вместо цветов вы подарите нам бутылочку вашего любимого
+                    алкогольного напитка. Это будет еще одним хорошим поводом
+                    встретиться и разделить ее вместе с вами.
                   </p>
                 </div>
               </div>
@@ -538,12 +540,11 @@
             </div>
 
             <div class="col-md-6 col-xs-12 fh5co-video-col">
-              <div class="fh5co-video fh5co-video-file">
+              <div class="fh5co-video fh5co-video-file" id="wedding-video-wrap">
                 <video
                   class="fh5co-video-player fh5co-video-desktop"
                   src="images/wedding.mp4"
                   controls
-                  autoplay
                   muted
                   playsinline
                   preload="metadata"
@@ -552,9 +553,8 @@
                   class="fh5co-video-player fh5co-video-mobile"
                   src="images/wedding.mp4"
                   controls
-                  playsinline
-                  autoplay
                   muted
+                  playsinline
                   preload="metadata"
                 ></video>
               </div>
@@ -664,6 +664,44 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const videoWrap = document.getElementById("wedding-video-wrap");
+        if (videoWrap) {
+          const videos = [...videoWrap.querySelectorAll("video")];
+
+          const isVideoVisible = (video) => {
+            const style = window.getComputedStyle(video);
+            return style.display !== "none" && style.visibility !== "hidden";
+          };
+
+          const syncVideos = (shouldPlay) => {
+            videos.forEach((video) => {
+              if (shouldPlay && isVideoVisible(video)) {
+                video.play().catch(() => {});
+              } else {
+                video.pause();
+              }
+            });
+          };
+
+          let inView = false;
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                inView = entry.isIntersecting;
+                syncVideos(inView);
+              });
+            },
+            { threshold: 0.4 }
+          );
+
+          observer.observe(videoWrap);
+
+          window.addEventListener("resize", () => {
+            if (inView) syncVideos(true);
+          });
+        }
+
         document.querySelectorAll(".dresscode-carousel").forEach((carousel) => {
           const slides = [...carousel.querySelectorAll(".dresscode-slide")];
           if (slides.length <= 1) return;
@@ -721,7 +759,7 @@
           // Получаем данные
           const name = document.querySelector(".name-input").value.trim();
           const attendance = document.querySelector(
-            "input[name='attendance']:checked",
+            "input[name='attendance']:checked"
           );
           const drinks = [
             ...document.querySelectorAll("input[type='checkbox']:checked"),
@@ -734,7 +772,9 @@
           }
 
           // Формируем строку
-          const line = `Имя: ${name} | Участие: ${attendance.value} | Напитки: ${drinks.join(", ")}`;
+          const line = `Имя: ${name} | Участие: ${
+            attendance.value
+          } | Напитки: ${drinks.join(", ")}`;
 
           // Отправляем на сервер
           fetch("save.php", {
