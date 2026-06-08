@@ -2574,6 +2574,12 @@ h2.lobster-heading {
   position: relative;
 }
 
+@media screen and (max-width: 768px) {
+  .form-wrapper {
+    height: 2200px;
+  }
+}
+
 /* Фиксированная ширина формы — ключевой момент */
 .form-wrapper iframe {
   width: 760px; /* минимальная ширина Google Forms */
