@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -110,7 +110,7 @@
             <div class="col-md-12 text-center">
               <div class="display-t">
                 <div class="display-tc">
-                  <h1 class="typewriter">Angelina &amp; Andrey</h1>
+                  <h1 class="typewriter">Andrey &amp; Angelina</h1>
                   <h2 class="typewriter">Осталось до нашей свадьбы:</h2>
                   <div class="simply-countdown simply-countdown-one"></div>
                 </div>
@@ -692,7 +692,7 @@
                 syncVideos(inView);
               });
             },
-            { threshold: 0.4 }
+            { threshold: 0.4 },
           );
 
           observer.observe(videoWrap);
@@ -759,7 +759,7 @@
           // Получаем данные
           const name = document.querySelector(".name-input").value.trim();
           const attendance = document.querySelector(
-            "input[name='attendance']:checked"
+            "input[name='attendance']:checked",
           );
           const drinks = [
             ...document.querySelectorAll("input[type='checkbox']:checked"),
